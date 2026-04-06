@@ -1,0 +1,17 @@
+﻿# task_definitions
+# Predefined parameters used by the server to respond to task start requests.
+
+columns:
+  - name: id
+    type: uuid
+    key: primary
+  - name: scene
+    type: text
+  - name: task_type
+    type: text
+  - name: difficulty_level
+    type: int
+  - name: expected_time_seconds
+    type: int
+  - name: timeout_seconds
+    type: int

@@ -1,0 +1,35 @@
+﻿# performance_metrics_global
+
+columns:
+  - name: task_id
+    type: uuid
+    key: primary
+    references: tasks.id
+  - name: completion_time
+    type: float
+  - name: error_count
+    type: int
+  - name: prompt_count
+    type: int
+  - name: path_efficiency
+    type: float
+  - name: smoothness
+    type: float
+  - name: hesitation_count
+    type: int
+  - name: hesitation_total_time
+    type: float
+  - name: spatial_accuracy
+    type: float
+  - name: steps_completed
+    type: int
+    optional: true
+  - name: step_errors
+    type: int
+    optional: true
+  - name: avg_speed
+    type: float
+    optional: true
+  - name: peak_speed
+    type: float
+    optional: true

@@ -1,0 +1,32 @@
+﻿# Task Start Request
+
+type: object
+required:
+  - session_id
+  - scene
+  - task_type
+  - difficulty_level
+  - target_size
+  - reach_distance
+  - task_complexity
+  - start_time
+properties:
+  session_id:
+    type: string
+  scene:
+    type: string
+  task_type:
+    type: string
+  difficulty_level:
+    type: integer
+  target_size:
+    type: number
+    format: float
+  reach_distance:
+    type: number
+    format: float
+  task_complexity:
+    type: integer
+  start_time:
+    type: string
+    format: date-time

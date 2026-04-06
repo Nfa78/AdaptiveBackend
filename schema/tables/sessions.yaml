@@ -1,0 +1,21 @@
+﻿# sessions
+
+columns:
+  - name: id
+    type: uuid
+    key: primary
+  - name: patient_id
+    type: uuid
+    key: foreign
+    references: patients.id
+  - name: start_time
+    type: timestamp
+  - name: end_time
+    type: timestamp
+  - name: device
+    type: text
+  - name: version
+    type: text
+  - name: notes
+    type: text
+    optional: true

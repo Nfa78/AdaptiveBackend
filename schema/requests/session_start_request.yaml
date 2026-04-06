@@ -1,0 +1,17 @@
+﻿# Session Start Request
+
+type: object
+required:
+  - patient_code
+  - start_time
+properties:
+  patient_code:
+    type: string
+    description: User-facing pseudonymous code mapped to a backend patient_id
+  device:
+    type: string
+  version:
+    type: string
+  start_time:
+    type: string
+    format: date-time

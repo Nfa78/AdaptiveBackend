@@ -1,0 +1,61 @@
+﻿# Task Metrics Request
+
+type: object
+required:
+  - completion_time
+  - error_count
+  - prompt_count
+  - path_efficiency
+  - smoothness
+  - hesitation_count
+  - hesitation_total_time
+  - spatial_accuracy
+properties:
+  completion_time:
+    type: number
+    format: float
+  error_count:
+    type: integer
+  prompt_count:
+    type: integer
+  path_efficiency:
+    type: number
+    format: float
+  smoothness:
+    type: number
+    format: float
+  hesitation_count:
+    type: integer
+  hesitation_total_time:
+    type: number
+    format: float
+  spatial_accuracy:
+    type: number
+    format: float
+  steps_completed:
+    type: integer
+    description: Actual steps completed by the user
+  step_errors:
+    type: integer
+    description: Missed or incorrect steps during the task
+  avg_speed:
+    type: number
+    format: float
+  peak_speed:
+    type: number
+    format: float
+  scene_metrics:
+    type: array
+    items:
+      type: object
+      required:
+        - feature_name
+        - feature_value
+      properties:
+        feature_name:
+          type: string
+        feature_value:
+          type: number
+          format: float
+        feature_unit:
+          type: string

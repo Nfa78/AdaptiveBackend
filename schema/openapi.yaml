@@ -1,0 +1,235 @@
+﻿openapi: 3.0.3
+info:
+  title: Adaptive VR Rehab API
+  version: 0.2.1
+  description: API for receiving task context, metrics, and returning adaptation decisions.
+servers:
+  - url: https://api.example.com
+paths:
+  /sessions/start:
+    post:
+      summary: Start a session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionStartRequest'
+      responses:
+        '200':
+          description: Session started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionStartResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tasks/start:
+    post:
+      summary: Start a task and receive timeout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskStartRequest'
+      responses:
+        '200':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskStartResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /tasks/{task_id}/metrics:
+    post:
+      summary: Submit aggregated metrics for a task
+      parameters:
+        - in: path
+          name: task_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskMetricsRequest'
+      responses:
+        '200':
+          description: Metrics accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskMetricsResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    SessionStartRequest:
+      type: object
+      required:
+        - patient_code
+        - start_time
+      properties:
+        patient_code:
+          type: string
+          description: User-facing pseudonymous code mapped to a backend patient_id
+        device:
+          type: string
+        version:
+          type: string
+        start_time:
+          type: string
+          format: date-time
+    SessionStartResponse:
+      type: object
+      required:
+        - session_id
+      properties:
+        session_id:
+          type: string
+    TaskStartRequest:
+      type: object
+      required:
+        - session_id
+        - scene
+        - task_type
+        - difficulty_level
+        - target_size
+        - reach_distance
+        - task_complexity
+        - start_time
+      properties:
+        session_id:
+          type: string
+        scene:
+          type: string
+        task_type:
+          type: string
+        difficulty_level:
+          type: integer
+        target_size:
+          type: number
+          format: float
+        reach_distance:
+          type: number
+          format: float
+        task_complexity:
+          type: integer
+        start_time:
+          type: string
+          format: date-time
+    TaskStartResponse:
+      type: object
+      required:
+        - task_id
+        - timeout_seconds
+      properties:
+        task_id:
+          type: string
+        timeout_seconds:
+          type: integer
+        expected_time_seconds:
+          type: integer
+          description: Optional expected completion time for normalization
+    TaskMetricsRequest:
+      type: object
+      required:
+        - completion_time
+        - error_count
+        - prompt_count
+        - path_efficiency
+        - smoothness
+        - hesitation_count
+        - hesitation_total_time
+        - spatial_accuracy
+      properties:
+        completion_time:
+          type: number
+          format: float
+        error_count:
+          type: integer
+        prompt_count:
+          type: integer
+        path_efficiency:
+          type: number
+          format: float
+        smoothness:
+          type: number
+          format: float
+        hesitation_count:
+          type: integer
+        hesitation_total_time:
+          type: number
+          format: float
+        spatial_accuracy:
+          type: number
+          format: float
+        steps_completed:
+          type: integer
+          description: Actual steps completed by the user
+        step_errors:
+          type: integer
+          description: Missed or incorrect steps during the task
+        avg_speed:
+          type: number
+          format: float
+        peak_speed:
+          type: number
+          format: float
+        scene_metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/SceneMetric'
+    SceneMetric:
+      type: object
+      required:
+        - feature_name
+        - feature_value
+      properties:
+        feature_name:
+          type: string
+        feature_value:
+          type: number
+          format: float
+        feature_unit:
+          type: string
+    TaskMetricsResponse:
+      type: object
+      required:
+        - decision
+        - method
+      properties:
+        decision:
+          type: string
+          enum: [increase, maintain, decrease]
+        method:
+          type: string
+          enum: [rule_based, ml]
+        confidence:
+          type: number
+          format: float
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        code:
+          type: string

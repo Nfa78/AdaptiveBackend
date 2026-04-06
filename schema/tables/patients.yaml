@@ -1,0 +1,15 @@
+﻿# patients
+
+columns:
+  - name: id
+    type: uuid
+    key: primary
+  - name: patient_code
+    type: text
+    unique: true
+  - name: dominant_hand
+    type: text
+    optional: true
+  - name: notes
+    type: text
+    optional: true

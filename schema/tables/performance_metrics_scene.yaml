@@ -1,0 +1,17 @@
+﻿# performance_metrics_scene
+
+columns:
+  - name: id
+    type: uuid
+    key: primary
+  - name: task_id
+    type: uuid
+    key: foreign
+    references: tasks.id
+  - name: feature_name
+    type: text
+  - name: feature_value
+    type: float
+  - name: feature_unit
+    type: text
+    optional: true

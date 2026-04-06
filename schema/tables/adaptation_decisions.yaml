@@ -1,0 +1,19 @@
+﻿# adaptation_decisions
+
+columns:
+  - name: id
+    type: uuid
+    key: primary
+  - name: task_id
+    type: uuid
+    key: foreign
+    references: tasks.id
+  - name: method
+    type: text
+  - name: decision
+    type: text
+  - name: confidence
+    type: float
+    optional: true
+  - name: timestamp
+    type: timestamp

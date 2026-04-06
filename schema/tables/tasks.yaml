@@ -1,0 +1,26 @@
+﻿# tasks
+
+columns:
+  - name: id
+    type: uuid
+    key: primary
+  - name: session_id
+    type: uuid
+    key: foreign
+    references: sessions.id
+  - name: scene
+    type: text
+  - name: task_type
+    type: text
+  - name: difficulty_level
+    type: int
+  - name: target_size
+    type: float
+  - name: reach_distance
+    type: float
+  - name: task_complexity
+    type: int
+  - name: start_time
+    type: timestamp
+  - name: end_time
+    type: timestamp
